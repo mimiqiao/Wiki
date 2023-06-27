@@ -13,6 +13,7 @@ import { useRouter } from 'next/router'
 import Live2D from '@/components/Live2D'
 import BLOG from '@/blog.config'
 import Announcement from './components/Announcement'
+import TransitionEffect from '@/components/TransitionEffect'
 const ThemeGlobalMedium = createContext()
 
 /**
@@ -26,13 +27,13 @@ const LayoutBase = props => {
   const { locale } = useGlobal()
   const router = useRouter()
   const [tocVisible, changeTocVisible] = useState(false)
-  const { onLoading } = useGlobal()
+  //   const { onLoading } = useGlobal()
 
-  const LoadingCover = <div id='cover-loading' className={`${onLoading ? 'z-50 opacity-50' : '-z-10 opacity-0'} pointer-events-none transition-all duration-300`}>
-        <div className='w-full h-screen flex justify-center items-center'>
-            <i className="fa-solid fa-spinner text-2xl text-black dark:text-white animate-spin">  </i>
-        </div>
-    </div>
+  //   const LoadingCover = <div id='cover-loading' className={`${onLoading ? 'z-50 opacity-50' : '-z-10 opacity-0'} pointer-events-none transition-all duration-300`}>
+  //         <div className='w-full h-screen flex justify-center items-center'>
+  //             <i className="fa-solid fa-spinner text-2xl text-black dark:text-white animate-spin">  </i>
+  //         </div>
+  //     </div>
 
   return (
         <ThemeGlobalMedium.Provider value={{ tocVisible, changeTocVisible }}>
@@ -51,7 +52,10 @@ const LayoutBase = props => {
                         <div id='container-inner' className='px-7 max-w-5xl justify-center mx-auto min-h-screen'>
                             {slotTop}
 
-                            {onLoading ? LoadingCover : children}
+                            {/* {onLoading ? LoadingCover : children} */}
+                           <TransitionEffect>
+                            {children}
+                           </TransitionEffect>
 
                             {/* 回顶按钮 */}
                             <div

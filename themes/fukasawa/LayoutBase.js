@@ -4,7 +4,7 @@ import AsideLeft from './components/AsideLeft'
 import Live2D from '@/components/Live2D'
 import BLOG from '@/blog.config'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
-import { useGlobal } from '@/lib/global'
+import TransitionEffect from '@/components/TransitionEffect'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -28,13 +28,13 @@ const LayoutBase = (props) => {
     loadExternalResource('/css/theme-fukasawa.css', 'css')
   }
 
-  const { onLoading } = useGlobal()
+  //   const { onLoading } = useGlobal()
 
-  const LoadingCover = <div id='cover-loading' className={`${onLoading ? 'z-50 opacity-50' : '-z-10 opacity-0'} pointer-events-none transition-all duration-300`}>
-        <div className='w-full h-screen flex justify-center items-center'>
-            <i className="fa-solid fa-spinner text-2xl text-black dark:text-white animate-spin">  </i>
-        </div>
-    </div>
+  //   const LoadingCover = <div id='cover-loading' className={`${onLoading ? 'z-50 opacity-50' : '-z-10 opacity-0'} pointer-events-none transition-all duration-300`}>
+  //         <div className='w-full h-screen flex justify-center items-center'>
+  //             <i className="fa-solid fa-spinner text-2xl text-black dark:text-white animate-spin">  </i>
+  //         </div>
+  //     </div>
 
   return (<div id='theme-fukasawa' >
     <CommonHead meta={meta} />
@@ -46,7 +46,10 @@ const LayoutBase = (props) => {
       <main id='wrapper' className='relative flex w-full py-8 justify-center bg-day dark:bg-night'>
         <div id='container-inner' className='2xl:max-w-6xl md:max-w-4xl w-full relative z-10'>
           <div> {headerSlot} </div>
-          <div> {onLoading ? LoadingCover : children} </div>
+          {/* <div> {onLoading ? LoadingCover : children} </div> */}
+          <TransitionEffect>
+            {children}
+          </TransitionEffect>
         </div>
       </main>
 

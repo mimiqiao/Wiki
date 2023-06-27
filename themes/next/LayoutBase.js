@@ -3,15 +3,14 @@ import FloatDarkModeButton from './components/FloatDarkModeButton'
 import Footer from './components/Footer'
 import JumpToBottomButton from './components/JumpToBottomButton'
 import JumpToTopButton from './components/JumpToTopButton'
-import LoadingCover from './components/LoadingCover'
 import SideAreaLeft from './components/SideAreaLeft'
 import SideAreaRight from './components/SideAreaRight'
 import TopNav from './components/TopNav'
-import { useGlobal } from '@/lib/global'
 import { useEffect, useRef, useState } from 'react'
 import CONFIG_NEXT from './config_next'
 import Live2D from '@/components/Live2D'
 import BLOG from '@/blog.config'
+import TransitionEffect from '@/components/TransitionEffect'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -20,7 +19,7 @@ import BLOG from '@/blog.config'
  */
 const LayoutBase = (props) => {
   const { children, headerSlot, meta, sideBarSlot, floatSlot, rightAreaSlot, siteInfo } = props
-  const { onLoading } = useGlobal()
+  //   const { onLoading } = useGlobal()
   const targetRef = useRef(null)
   const floatButtonGroup = useRef(null)
   const leftAreaSlot = <Live2D/>
@@ -70,7 +69,10 @@ const LayoutBase = (props) => {
           {/* 左侧栏样式 */}
           <SideAreaLeft slot={leftAreaSlot} targetRef={targetRef} {...props}/>
           <section id='container-inner' className={`${CONFIG_NEXT.NAV_TYPE !== 'normal' ? 'mt-24' : ''} lg:max-w-3xl xl:max-w-4xl flex-grow md:mt-0 min-h-screen w-full relative z-10`} ref={targetRef}>
-            {onLoading ? <LoadingCover/> : <> {children}</> }
+            {/* {onLoading ? <LoadingCover/> : <> {children}</> } */}
+            <TransitionEffect>
+                {children}
+            </TransitionEffect>
           </section>
           {/* 右侧栏样式 */}
           { CONFIG_NEXT.RIGHT_BAR && <SideAreaRight targetRef={targetRef} slot={rightAreaSlot} {...props}/> }

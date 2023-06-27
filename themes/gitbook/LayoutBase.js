@@ -7,7 +7,6 @@ import CONFIG_GITBOOK from './config_gitbook'
 import TopNavBar from './components/TopNavBar'
 import SearchInput from './components/SearchInput'
 import BottomMenuBar from './components/BottomMenuBar'
-import { useGlobal } from '@/lib/global'
 import Live2D from '@/components/Live2D'
 import BLOG from '@/blog.config'
 import BlogPostListScroll from './components/BlogPostListScroll'
@@ -17,6 +16,7 @@ import { useRouter } from 'next/router'
 import Announcement from './components/Announcement'
 import PageNavDrawer from './components/PageNavDrawer'
 import FloatTocButton from './components/FloatTocButton'
+import TransitionEffect from '@/components/TransitionEffect'
 const ThemeGlobalMedium = createContext()
 
 /**
@@ -30,7 +30,7 @@ const LayoutBase = (props) => {
   const [tocVisible, changeTocVisible] = useState(false)
   const [pageNavVisible, changePageNavVisible] = useState(false)
   const [filterPosts, setFilterPosts] = useState(allNavPages)
-  const { onLoading } = useGlobal()
+  //   const { onLoading } = useGlobal()
   const router = useRouter()
 
   const showTocButton = post?.toc?.length > 1
@@ -39,11 +39,11 @@ const LayoutBase = (props) => {
     setFilterPosts(allNavPages)
   }, [post])
 
-  const LoadingCover = <div id='cover-loading' className={`${onLoading ? 'z-50 opacity-50' : '-z-10 opacity-0'} pointer-events-none transition-all duration-300`}>
-        <div className='w-full h-screen flex justify-center items-center'>
-            <i className="fa-solid fa-spinner text-2xl text-black dark:text-white animate-spin">  </i>
-        </div>
-    </div>
+  //   const LoadingCover = <div id='cover-loading' className={`${onLoading ? 'z-50 opacity-50' : '-z-10 opacity-0'} pointer-events-none transition-all duration-300`}>
+  //         <div className='w-full h-screen flex justify-center items-center'>
+  //             <i className="fa-solid fa-spinner text-2xl text-black dark:text-white animate-spin">  </i>
+  //         </div>
+  //     </div>
 
   return (
         <ThemeGlobalMedium.Provider value={{ tocVisible, changeTocVisible, filterPosts, setFilterPosts, allNavPages, pageNavVisible, changePageNavVisible }}>
@@ -73,7 +73,10 @@ const LayoutBase = (props) => {
                         <div id='container-inner' className='w-full px-7 max-w-3xl justify-center mx-auto'>
                             {slotTop}
 
-                            {onLoading ? LoadingCover : children}
+                            <TransitionEffect>
+                                {/* {onLoading ? LoadingCover : children} */}
+                                {children}
+                            </TransitionEffect>
 
                             {/* 回顶按钮 */}
                             <div
@@ -113,10 +116,10 @@ const LayoutBase = (props) => {
                 </main>
 
                 {showTocButton && !tocVisible && <div className='md:hidden fixed right-0 bottom-52 z-30 bg-white border-l border-t border-b dark:border-gray-800 rounded'>
-                    <FloatTocButton {...props}/>
+                    <FloatTocButton {...props} />
                 </div>}
 
-                <PageNavDrawer {...props}/>
+                <PageNavDrawer {...props} />
 
                 {/* 移动端底部导航栏 */}
                 <BottomMenuBar {...props} className='block md:hidden' />
